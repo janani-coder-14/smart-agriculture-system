@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Registration</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Farmer Registration</h1>
+
+    <form id="registerForm">
+
+        <label for="name">Full Name</label>
+        <input
+            type="text"
+            id="name"
+            placeholder="Enter your full name"
+        >
+
+        <label for="phone">Mobile Number</label>
+        <input
+            type="tel"
+            id="phone"
+            placeholder="Enter 10-digit mobile number"
+            maxlength="10"
+        >
+
+        <label for="password">Password</label>
+        <input
+            type="password"
+            id="password"
+            placeholder="Create password"
+        >
+
+        <label for="confirmPassword">Confirm Password</label>
+        <input
+            type="password"
+            id="confirmPassword"
+            placeholder="Confirm password"
+        >
+
+        <div class="email-section">
+
+            <label for="email">
+                Email <span>(Optional)</span>
+            </label>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Enter email if available"
+            >
+
+            <small>
+                Email can be linked later for account recovery
+                and notifications.
+            </small>
+
+        </div>
+
+        <button type="submit">Create Account</button>
+
+        <p id="message"></p>
+
+    </form>
+
+</div>
+
+<script src="js/auth.js"></script>
+
+</body>
+</html>
