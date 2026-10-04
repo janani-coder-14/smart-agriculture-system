@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Agriculture - Farmer Registration</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="card">
+    <h1>Smart Agriculture</h1>
+    <p class="subtitle">Farmer Registration</p>
+
+    <div id="form-message" class="message"></div>
+
+    <form id="register-form" novalidate>
+      <div class="field">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" autocomplete="name">
+        <span class="error" id="err-name"></span>
+      </div>
+      <div class="field">
+        <label for="mobile">Mobile Number</label>
+        <input type="text" id="mobile" inputmode="numeric" maxlength="10" autocomplete="username">
+        <span class="error" id="err-mobile"></span>
+      </div>
+      <div class="field">
+        <label for="email">Email <span class="optional">(optional)</span></label>
+        <input type="text" id="email" autocomplete="email">
+        <span class="error" id="err-email"></span>
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <div class="password-wrap">
+          <input type="password" id="password" autocomplete="new-password">
+          <button type="button" class="toggle-pw" data-target="password" aria-label="Show password">Show</button>
+        </div>
+        <span class="error" id="err-password"></span>
+      </div>
+      <div class="field">
+        <label for="confirmPassword">Confirm Password</label>
+        <div class="password-wrap">
+          <input type="password" id="confirmPassword" autocomplete="new-password">
+          <button type="button" class="toggle-pw" data-target="confirmPassword" aria-label="Show password">Show</button>
+        </div>
+        <span class="error" id="err-confirmPassword"></span>
+      </div>
+      <button type="submit" class="primary" id="submit-btn">Register</button>
+    </form>
+
+    <div class="links">
+      <a href="index.html">Already registered? Login</a>
+    </div>
+  </div>
+  <script src="js/common.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

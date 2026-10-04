@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Agriculture - Admin</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="card">
+    <h1>Admin</h1>
+    <p class="subtitle">Smart Agriculture - Administrator Access</p>
+
+    <div id="form-message" class="message"></div>
+
+    <form id="admin-form" novalidate>
+      <div class="field">
+        <label for="username">Username</label>
+        <input type="text" id="username" autocomplete="username">
+        <span class="error" id="err-username"></span>
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <div class="password-wrap">
+          <input type="password" id="password" autocomplete="current-password">
+          <button type="button" class="toggle-pw" data-target="password" aria-label="Show password">Show</button>
+        </div>
+        <span class="error" id="err-password"></span>
+      </div>
+      <button type="submit" class="primary" id="submit-btn">Admin Login</button>
+    </form>
+
+    <div id="admin-panel" style="display:none">
+      <p>Welcome, <strong id="admin-name"></strong>. You are logged in as administrator.</p>
+      <p class="subtitle">Admin features (farmer management) will be added in a later sprint.</p>
+      <button type="button" class="secondary" id="admin-logout-btn">Logout</button>
+    </div>
+
+    <div class="links"><a href="index.html">Back to Farmer Login</a></div>
+  </div>
+  <script src="js/common.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

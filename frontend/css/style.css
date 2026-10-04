@@ -1,0 +1,79 @@
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #eef5ec;
+  color: #1f2d1f;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.card {
+  background: #fff;
+  width: 100%;
+  max-width: 440px;
+  padding: 28px;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+h1 { margin: 0 0 4px; color: #2e7d32; font-size: 24px; }
+.subtitle { margin: 0 0 20px; color: #5a6b5a; font-size: 14px; }
+.field { margin-bottom: 14px; }
+label { display: block; font-weight: bold; font-size: 14px; margin-bottom: 5px; }
+.optional { font-weight: normal; color: #7a8a7a; }
+input, select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #b8c9b8;
+  border-radius: 6px;
+  font-size: 15px;
+}
+input:focus, select:focus { outline: 2px solid #81c784; }
+input[readonly] { background: #f0f0f0; color: #666; }
+input.invalid { border-color: #c62828; }
+.error { display: block; color: #c62828; font-size: 13px; min-height: 16px; margin-top: 4px; }
+.password-wrap { position: relative; }
+.password-wrap input { padding-right: 60px; }
+.toggle-pw {
+  position: absolute;
+  right: 6px;
+  top: 6px;
+  background: none;
+  border: none;
+  color: #2e7d32;
+  cursor: pointer;
+  font-size: 13px;
+  padding: 5px 8px;
+}
+button.primary {
+  width: 100%;
+  padding: 11px;
+  background: #2e7d32;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 6px;
+}
+button.primary:hover { background: #256628; }
+button.primary:disabled { background: #8aa88b; cursor: not-allowed; }
+button.secondary {
+  width: 100%;
+  padding: 10px;
+  background: #fff;
+  color: #c62828;
+  border: 1px solid #c62828;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+.message { padding: 10px; border-radius: 6px; margin-bottom: 14px; font-size: 14px; display: none; }
+.message.success { display: block; background: #e8f5e9; color: #1b5e20; border: 1px solid #a5d6a7; }
+.message.fail { display: block; background: #ffebee; color: #b71c1c; border: 1px solid #ef9a9a; }
+.links { margin-top: 16px; text-align: center; font-size: 14px; }
+.links a { color: #2e7d32; }
+.links span { margin: 0 6px; color: #aaa; }

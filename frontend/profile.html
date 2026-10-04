@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Agriculture - My Profile</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="card">
+    <h1>My Profile</h1>
+    <p class="subtitle">Smart Agriculture - Farmer Dashboard</p>
+
+    <div id="form-message" class="message"></div>
+
+    <form id="profile-form" novalidate>
+      <div class="field">
+        <label for="name">Full Name</label>
+        <input type="text" id="name">
+        <span class="error" id="err-name"></span>
+      </div>
+      <div class="field">
+        <label for="mobile">Mobile Number</label>
+        <input type="text" id="mobile" readonly>
+        <span class="error" id="err-mobile"></span>
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="text" id="email">
+        <span class="error" id="err-email"></span>
+      </div>
+      <div class="field">
+        <label for="location">Location</label>
+        <input type="text" id="location" placeholder="Village / District">
+        <span class="error" id="err-location"></span>
+      </div>
+      <div class="field">
+        <label for="farmSize">Farm Size (acres)</label>
+        <input type="text" id="farmSize" placeholder="e.g. 2.5">
+        <span class="error" id="err-farmSize"></span>
+      </div>
+      <div class="field">
+        <label for="mainCrop">Main Crop</label>
+        <input type="text" id="mainCrop" placeholder="e.g. Rice">
+        <span class="error" id="err-mainCrop"></span>
+      </div>
+      <button type="submit" class="primary" id="submit-btn">Save / Update Profile</button>
+    </form>
+    <button type="button" class="secondary" id="logout-btn">Logout</button>
+  </div>
+  <script src="js/common.js"></script>
+  <script src="js/profile.js"></script>
+</body>
+</html>
