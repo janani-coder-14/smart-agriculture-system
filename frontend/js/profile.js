@@ -1,73 +1,230 @@
-// Farmer profile page: load profile, update profile, logout.
+// =========================================
+// PROFILE PAGE
+// =========================================
 
-const form = document.getElementById('profile-form');
-const farmerId = localStorage.getItem('farmerId');
-const fields = ['name', 'mobile', 'email', 'location', 'farmSize', 'mainCrop'];
+// Get logged-in farmer
+const farmerData = localStorage.getItem("farmer");
 
-if (!farmerId) {
-  window.location.href = 'index.html'; // not logged in
+
+// If farmer is not logged in
+if (!farmerData) {
+
+    window.location.href = "index.html";
+
+} else {
+
+    const farmer = JSON.parse(farmerData);
+
+    // Display farmer information
+    document.getElementById("profileName").value =
+        farmer.name || "";
+
+    document.getElementById("profileMobile").value =
+        farmer.mobile || farmer.phone || "";
+
+    document.getElementById("profileEmail").value =
+        farmer.email || "";
 }
 
-function fillForm(farmer) {
-  fields.forEach((f) => (document.getElementById(f).value = farmer[f] || ''));
+
+// =========================================
+// ENABLE EDITING
+// =========================================
+
+function enableEditing() {
+
+    document.getElementById("profileName").readOnly = false;
+    document.getElementById("profileMobile").readOnly = false;
+    document.getElementById("profileEmail").readOnly = false;
+
+    document.getElementById("profileActions").style.display = "flex";
+
+    document.getElementById("editButton").style.display = "none";
+
+    clearMessage();
 }
 
-async function loadProfile() {
-  try {
-    const { status, data } = await api('GET', '/api/farmers/' + farmerId);
-    if (status === 200) {
-      fillForm(data.farmer);
-    } else {
-      // e.g. 404 after a server restart (in-memory data was cleared)
-      localStorage.removeItem('farmerId');
-      window.location.href = 'index.html';
+
+// =========================================
+// CANCEL EDITING
+// =========================================
+
+function cancelEditing() {
+
+    const farmer = JSON.parse(
+        localStorage.getItem("farmer")
+    );
+
+    document.getElementById("profileName").value =
+        farmer.name || "";
+
+    document.getElementById("profileMobile").value =
+        farmer.mobile || farmer.phone || "";
+
+    document.getElementById("profileEmail").value =
+        farmer.email || "";
+
+    disableEditing();
+
+    clearMessage();
+}
+
+
+// =========================================
+// DISABLE EDITING
+// =========================================
+
+function disableEditing() {
+
+    document.getElementById("profileName").readOnly = true;
+    document.getElementById("profileMobile").readOnly = true;
+    document.getElementById("profileEmail").readOnly = true;
+
+    document.getElementById("profileActions").style.display = "none";
+
+    document.getElementById("editButton").style.display = "block";
+}
+
+
+// =========================================
+// SAVE CHANGES
+// =========================================
+
+document.getElementById("profileForm").addEventListener(
+    "submit",
+    async function (event) {
+
+        event.preventDefault();
+
+        const name =
+            document.getElementById("profileName").value.trim();
+
+        const mobile =
+            document.getElementById("profileMobile").value.trim();
+
+        const email =
+            document.getElementById("profileEmail").value.trim();
+
+
+        // Basic validation
+        if (name === "") {
+
+            showMessage(
+                "Name cannot be empty.",
+                false
+            );
+
+            return;
+        }
+
+
+        if (!/^[6-9]\d{9}$/.test(mobile)) {
+
+            showMessage(
+                "Enter a valid 10-digit mobile number.",
+                false
+            );
+
+            return;
+        }
+
+
+        if (
+            email !== "" &&
+            !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+        ) {
+
+            showMessage(
+                "Enter a valid email address.",
+                false
+            );
+
+            return;
+        }
+
+
+        // Get existing farmer
+        const farmer = JSON.parse(
+            localStorage.getItem("farmer")
+        );
+
+
+        // Update local farmer data
+        farmer.name = name;
+        farmer.mobile = mobile;
+        farmer.phone = mobile;
+        farmer.email = email;
+
+
+        // Save updated farmer
+        localStorage.setItem(
+            "farmer",
+            JSON.stringify(farmer)
+        );
+
+
+        // Keep farmer ID
+        if (farmer.id) {
+
+            localStorage.setItem(
+                "farmerId",
+                farmer.id
+            );
+        }
+
+
+        // Finish editing
+        disableEditing();
+
+
+        showMessage(
+            "Profile updated successfully.",
+            true
+        );
     }
-  } catch (err) {
-    showMessage('form-message', 'Cannot reach the server. Is it running?', false);
-  }
+);
+
+
+// =========================================
+// MESSAGE
+// =========================================
+
+function showMessage(message, success) {
+
+    const element =
+        document.getElementById("profileMessage");
+
+    element.textContent = message;
+
+    element.className =
+        success
+            ? "profile-message success"
+            : "profile-message error";
 }
 
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  clearErrors(form);
-  hideMessage('form-message');
 
-  const body = {
-    name: document.getElementById('name').value.trim(),
-    email: document.getElementById('email').value.trim(),
-    location: document.getElementById('location').value.trim(),
-    farmSize: document.getElementById('farmSize').value.trim(),
-    mainCrop: document.getElementById('mainCrop').value.trim()
-  };
+function clearMessage() {
 
-  const errors = {};
-  ['name', 'email', 'farmSize'].forEach((f) => {
-    const msg = rules[f](body[f]);
-    if (msg) errors[f] = msg;
-  });
-  if (Object.keys(errors).length) return showFieldErrors(form, errors);
+    const element =
+        document.getElementById("profileMessage");
 
-  const btn = document.getElementById('submit-btn');
-  btn.disabled = true;
-  try {
-    const { status, data } = await api('PUT', '/api/farmers/' + farmerId, body);
-    if (status === 200) {
-      fillForm(data.farmer);
-      showMessage('form-message', data.message, true);
-    } else {
-      if (data.errors) showFieldErrors(form, data.errors);
-      showMessage('form-message', data.message || 'Update failed', false);
-    }
-  } catch (err) {
-    showMessage('form-message', 'Cannot reach the server. Is it running?', false);
-  } finally {
-    btn.disabled = false;
-  }
-});
+    element.textContent = "";
 
-document.getElementById('logout-btn').addEventListener('click', () => {
-  localStorage.removeItem('farmerId');
-  window.location.href = 'index.html';
-});
+    element.className = "profile-message";
+}
 
-if (farmerId) loadProfile();
+
+// =========================================
+// NAVIGATION
+// =========================================
+
+function goToDashboard() {
+
+    window.location.href = "dashboard.html";
+}
+
+
+function goToFarm() {
+
+    window.location.href = "farm.html";
+}

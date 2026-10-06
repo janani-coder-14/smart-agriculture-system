@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Farm & Crops | Smart Agriculture</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="profile-page">
+
+    <!-- HEADER -->
+    <header class="dashboard-header">
+
+        <div class="brand">
+            <span class="brand-icon">🌱</span>
+            <span>Smart Agriculture</span>
+        </div>
+
+        <button
+            class="back-btn"
+            onclick="goToDashboard()">
+            ← Dashboard
+        </button>
+
+    </header>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="profile-container">
+
+        <!-- PAGE INTRO -->
+        <section class="profile-intro">
+
+            <div>
+
+                <h1>
+                    Farm &amp; Crops
+                </h1>
+
+                <p>
+                    Add and manage information about your farm and crops.
+                </p>
+
+            </div>
+
+            <div class="profile-big-icon">
+                🌾
+            </div>
+
+        </section>
+
+
+        <!-- FARM INFORMATION -->
+        <section class="profile-card">
+
+            <div class="profile-card-header">
+
+                <div>
+
+                    <h2>
+                        🌾 Farm Information
+                    </h2>
+
+                    <p>
+                        Tell us about your farm.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- MESSAGE -->
+            <div
+                id="farmMessage"
+                class="profile-message">
+            </div>
+
+
+            <!-- FARM FORM -->
+            <form id="farmForm">
+
+
+                <!-- FARM LOCATION -->
+
+                <!-- FARM LOCATION -->
+
+<div class="profile-field">
+
+    <label for="farmLocation">
+        Farm Location
+    </label>
+
+    <div class="location-row">
+
+        <input
+            type="text"
+            id="farmLocation"
+            placeholder="Use your current location"
+            readonly
+            required>
+
+        <button
+            type="button"
+            id="locationButton"
+            class="location-btn">
+
+            📍 Use My Location
+
+        </button>
+
+    </div>
+
+    <!-- Location status -->
+
+    <div
+        id="locationStatus"
+        class="location-status">
+    </div>
+
+    <!-- Hidden coordinates -->
+
+    <input
+        type="hidden"
+        id="latitude">
+
+    <input
+        type="hidden"
+        id="longitude">
+
+</div>
+
+                <!-- FARM SIZE -->
+
+                <div class="profile-field">
+
+                    <label for="farmSize">
+                        Farm Size
+                    </label>
+
+                    <div class="farm-size-row">
+
+                        <input
+                            type="number"
+                            id="farmSize"
+                            placeholder="Enter farm size"
+                            min="0"
+                            step="0.01"
+                            required>
+
+                        <select id="farmUnit">
+
+                            <option value="acres">
+                                Acres
+                            </option>
+
+                            <option value="hectares">
+                                Hectares
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- MAIN CROP -->
+
+                <div class="profile-field">
+
+                    <label for="mainCrop">
+                        Main Crop
+                    </label>
+
+                    <select
+                        id="mainCrop"
+                        required>
+
+                        <option value="">
+                            Select your main crop
+                        </option>
+
+                        <option value="Paddy">
+                            Paddy
+                        </option>
+
+                        <option value="Wheat">
+                            Wheat
+                        </option>
+
+                        <option value="Maize">
+                            Maize
+                        </option>
+
+                        <option value="Sugarcane">
+                            Sugarcane
+                        </option>
+
+                        <option value="Cotton">
+                            Cotton
+                        </option>
+
+                        <option value="Groundnut">
+                            Groundnut
+                        </option>
+
+                        <option value="Banana">
+                            Banana
+                        </option>
+
+                        <option value="Coconut">
+                            Coconut
+                        </option>
+
+                        <option value="Tomato">
+                            Tomato
+                        </option>
+
+                        <option value="Other">
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- OTHER CROPS -->
+
+                <div class="profile-field">
+
+                    <label for="otherCrops">
+                        Other Crops
+                        <span class="optional">
+                            (Optional)
+                        </span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="otherCrops"
+                        placeholder="Example: Banana, Coconut">
+
+                </div>
+
+
+                <!-- BUTTONS -->
+
+                <div class="profile-actions">
+
+                    <button
+                        type="button"
+                        class="cancel-btn"
+                        onclick="goToDashboard()">
+
+                        Cancel
+
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="save-btn">
+
+                        Save Farm
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <!-- INFORMATION -->
+
+        <section class="profile-card farm-help-card">
+
+            <div class="farm-help">
+
+                <div class="farm-help-icon">
+                    🌱
+                </div>
+
+                <div>
+
+                    <h3>
+                        Why do we need this information?
+                    </h3>
+
+                    <p>
+                        Your farm and crop information can later be
+                        used for weather monitoring, soil analysis,
+                        crop recommendations and yield prediction.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="js/farm.js"></script>
+
+</body>
+
+</html>
