@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Farmer Management - Smart Agriculture</title>
+
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="dashboard-page">
+
+    <header class="dashboard-header">
+
+        <div class="header-content">
+
+            <div>
+                <h1>Smart Agriculture</h1>
+                <p>Farmer Management</p>
+            </div>
+
+            <div class="header-actions">
+
+                <button
+                    type="button"
+                    class="secondary"
+                    id="back-admin-btn">
+                    ← Admin
+                </button>
+
+                <button
+                    type="button"
+                    class="secondary"
+                    id="logout-btn">
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <main class="management-container">
+
+        <!-- PAGE TITLE -->
+
+        <section class="management-intro">
+
+            <h2>Farmer Management</h2>
+
+            <p>
+                View and manage registered farmers.
+            </p>
+
+        </section>
+
+
+        <!-- SEARCH -->
+
+        <section class="management-card">
+
+            <div class="management-top">
+
+                <div>
+                    <h3>Registered Farmers</h3>
+
+                    <p class="management-count">
+                        Total Farmers:
+                        <strong id="farmer-count">0</strong>
+                    </p>
+                </div>
+
+                <div class="search-box">
+
+                    <input
+                        type="text"
+                        id="search-farmer"
+                        placeholder="Search by name or mobile...">
+
+                </div>
+
+            </div>
+
+
+            <!-- FARMER TABLE -->
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Mobile</th>
+                            <th>Email</th>
+                            <th>Actions</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="farmer-table-body">
+
+                        <!-- Farmers will be inserted here -->
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <div
+                id="no-farmers"
+                class="no-farmers"
+                style="display: none;">
+
+                <p>No registered farmers found.</p>
+
+            </div>
+
+        </section>
+
+
+        <!-- FARMER DETAILS -->
+
+        <section
+            id="farmer-details"
+            class="management-card"
+            style="display: none;">
+
+            <div class="details-header">
+
+                <div>
+                    <h3>Farmer Details</h3>
+
+                    <p>
+                        View or edit farmer information.
+                    </p>
+                </div>
+
+                <button
+                    type="button"
+                    class="secondary"
+                    id="close-details-btn">
+                    Close
+                </button>
+
+            </div>
+
+
+            <form id="farmer-details-form">
+
+                <div class="profile-grid">
+
+                    <!-- NAME -->
+
+                    <div class="profile-field">
+
+                        <label for="detail-name">
+                            Full Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="detail-name"
+                            disabled>
+
+                    </div>
+
+
+                    <!-- MOBILE -->
+
+                    <div class="profile-field">
+
+                        <label for="detail-mobile">
+                            Mobile Number
+                        </label>
+
+                        <input
+                            type="text"
+                            id="detail-mobile"
+                            disabled>
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="profile-field">
+
+                        <label for="detail-email">
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            id="detail-email"
+                            disabled>
+
+                    </div>
+
+
+                    <!-- FARM LOCATION -->
+
+                    <div class="profile-field">
+
+                        <label for="detail-location">
+                            Farm Location
+                        </label>
+
+                        <input
+                            type="text"
+                            id="detail-location"
+                            disabled>
+
+                    </div>
+
+
+                    <!-- FARM SIZE -->
+
+                    <div class="profile-field">
+
+                        <label for="detail-size">
+                            Farm Size
+                        </label>
+
+                        <input
+                            type="text"
+                            id="detail-size"
+                            disabled>
+
+                    </div>
+
+
+                    <!-- MAIN CROP -->
+
+                    <div class="profile-field">
+
+                        <label for="detail-crop">
+                            Main Crop
+                        </label>
+
+                        <input
+                            type="text"
+                            id="detail-crop"
+                            disabled>
+
+                    </div>
+
+                </div>
+
+
+                <div class="details-actions">
+
+                    <button
+                        type="button"
+                        class="primary"
+                        id="edit-farmer-btn">
+
+                        Edit Farmer
+
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="primary"
+                        id="save-farmer-btn"
+                        style="display: none;">
+
+                        Save Changes
+
+                    </button>
+
+                    <button
+                        type="button"
+                        class="secondary"
+                        id="cancel-edit-btn"
+                        style="display: none;">
+
+                        Cancel
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+    </main>
+
+
+    <script src="js/farmer-management.js"></script>
+
+</body>
+
+</html>

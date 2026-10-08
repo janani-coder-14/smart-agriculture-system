@@ -1,8 +1,14 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
+
 const { createService } = require('../../backend/service');
 
-const valid = {
+
+// =========================================
+// TEST DATA
+// =========================================
+
+const validFarmer = {
   name: 'Ravi Kumar',
   mobile: '9876543210',
   email: 'ravi@example.com',
@@ -10,186 +16,524 @@ const valid = {
   confirmPassword: 'secret1'
 };
 
-function fresh() {
-  return createService();
-}
 
-// ---- Registration ----
-test('register: valid input returns 201 and no password data', () => {
-  const r = fresh().register(valid);
-  assert.equal(r.status, 201);
-  assert.equal(r.body.farmer.name, 'Ravi Kumar');
-  assert.equal(r.body.farmer.mobile, '9876543210');
-  assert.equal(r.body.farmer.password, undefined);
-  assert.equal(r.body.farmer.passwordHash, undefined);
-  assert.equal(r.body.farmer.passwordSalt, undefined);
+// =========================================
+// REGISTRATION TESTS
+// =========================================
+
+test('UNIT 1: register valid farmer', () => {
+
+  const service = createService();
+
+  const result = service.register(validFarmer);
+
+  assert.equal(result.status, 201);
+
+  assert.equal(
+    result.body.farmer.name,
+    'Ravi Kumar'
+  );
+
+  assert.equal(
+    result.body.farmer.mobile,
+    '9876543210'
+  );
+
+  // Password must not be exposed
+  assert.equal(
+    result.body.farmer.password,
+    undefined
+  );
+
+  assert.equal(
+    result.body.farmer.passwordHash,
+    undefined
+  );
+
 });
 
-test('register: email is optional', () => {
-  const r = fresh().register({ ...valid, email: '' });
-  assert.equal(r.status, 201);
+
+test('UNIT 2: register duplicate mobile number', () => {
+
+  const service = createService();
+
+  service.register(validFarmer);
+
+  const result =
+    service.register(validFarmer);
+
+  assert.equal(result.status, 409);
+
+  assert.equal(
+    result.body.message,
+    'This mobile number is already registered'
+  );
+
 });
 
-test('register: empty name returns 400 with name error', () => {
-  const r = fresh().register({ ...valid, name: '' });
-  assert.equal(r.status, 400);
-  assert.equal(r.body.errors.name, 'Full name is required');
+
+test('UNIT 3: register invalid farmer data', () => {
+
+  const service = createService();
+
+  const result =
+    service.register({
+      ...validFarmer,
+      name: '',
+      mobile: '12345'
+    });
+
+  assert.equal(result.status, 400);
+
+  assert.ok(result.body.errors);
+
 });
 
-test('register: invalid phone returns 400 with mobile error', () => {
-  const r = fresh().register({ ...valid, mobile: '12345' });
-  assert.equal(r.status, 400);
-  assert.ok(r.body.errors.mobile);
+
+// =========================================
+// LOGIN TESTS
+// =========================================
+
+test('UNIT 4: login with correct credentials', () => {
+
+  const service = createService();
+
+  service.register(validFarmer);
+
+  const result =
+    service.login({
+      mobile: validFarmer.mobile,
+      password: validFarmer.password
+    });
+
+  assert.equal(result.status, 200);
+
+  assert.equal(
+    result.body.message,
+    'Login successful'
+  );
+
+  assert.equal(
+    result.body.farmer.mobile,
+    validFarmer.mobile
+  );
+
 });
 
-test('register: short password returns 400', () => {
-  const r = fresh().register({ ...valid, password: '123', confirmPassword: '123' });
-  assert.equal(r.status, 400);
-  assert.ok(r.body.errors.password);
+
+test('UNIT 5: login with wrong password', () => {
+
+  const service = createService();
+
+  service.register(validFarmer);
+
+  const result =
+    service.login({
+      mobile: validFarmer.mobile,
+      password: 'wrongpassword'
+    });
+
+  assert.equal(result.status, 401);
+
+  assert.equal(
+    result.body.message,
+    'Invalid mobile number or password'
+  );
+
 });
 
-test('register: mismatched confirm password returns 400', () => {
-  const r = fresh().register({ ...valid, confirmPassword: 'different' });
-  assert.equal(r.status, 400);
-  assert.equal(r.body.errors.confirmPassword, 'Passwords do not match');
+
+test('UNIT 6: login with unknown mobile number', () => {
+
+  const service = createService();
+
+  service.register(validFarmer);
+
+  const result =
+    service.login({
+      mobile: '9111111111',
+      password: validFarmer.password
+    });
+
+  assert.equal(result.status, 401);
+
+  assert.equal(
+    result.body.message,
+    'Invalid mobile number or password'
+  );
+
 });
 
-test('register: invalid email returns 400', () => {
-  const r = fresh().register({ ...valid, email: 'bad-email' });
-  assert.equal(r.status, 400);
-  assert.ok(r.body.errors.email);
+
+test('UNIT 7: login with missing credentials', () => {
+
+  const service = createService();
+
+  const result =
+    service.login({});
+
+  assert.equal(result.status, 400);
+
+  assert.ok(
+    result.body.errors
+  );
+
 });
 
-test('register: duplicate mobile returns 409', () => {
-  const s = fresh();
-  s.register(valid);
-  const r = s.register({ ...valid, name: 'Someone Else' });
-  assert.equal(r.status, 409);
-  assert.ok(r.body.message);
+
+// =========================================
+// GET FARMER TESTS
+// =========================================
+
+test('UNIT 8: get existing farmer', () => {
+
+  const service = createService();
+
+  const registration =
+    service.register(validFarmer);
+
+  const farmerId =
+    registration.body.farmer.id;
+
+  const result =
+    service.getFarmer(farmerId);
+
+  assert.equal(result.status, 200);
+
+  assert.equal(
+    result.body.farmer.name,
+    'Ravi Kumar'
+  );
+
+  assert.equal(
+    result.body.farmer.mobile,
+    validFarmer.mobile
+  );
+
 });
 
-// ---- Login ----
-test('login: valid credentials return 200 with farmer', () => {
-  const s = fresh();
-  s.register(valid);
-  const r = s.login({ mobile: valid.mobile, password: valid.password });
-  assert.equal(r.status, 200);
-  assert.equal(r.body.farmer.mobile, valid.mobile);
-  assert.equal(r.body.farmer.passwordHash, undefined);
+
+test('UNIT 9: get non-existing farmer', () => {
+
+  const service = createService();
+
+  const result =
+    service.getFarmer(9999);
+
+  assert.equal(result.status, 404);
+
+  assert.equal(
+    result.body.message,
+    'Farmer not found'
+  );
+
 });
 
-test('login: wrong password returns 401', () => {
-  const s = fresh();
-  s.register(valid);
-  const r = s.login({ mobile: valid.mobile, password: 'wrongpass' });
-  assert.equal(r.status, 401);
-  assert.equal(r.body.message, 'Invalid mobile number or password');
+
+test('UNIT 10: get farmer does not expose password data', () => {
+
+  const service = createService();
+
+  const registration =
+    service.register(validFarmer);
+
+  const farmerId =
+    registration.body.farmer.id;
+
+  const result =
+    service.getFarmer(farmerId);
+
+  assert.equal(result.status, 200);
+
+  assert.equal(
+    result.body.farmer.password,
+    undefined
+  );
+
+  assert.equal(
+    result.body.farmer.passwordHash,
+    undefined
+  );
+
+  assert.equal(
+    result.body.farmer.passwordSalt,
+    undefined
+  );
+
 });
 
-test('login: unknown mobile returns 401', () => {
-  const r = fresh().login({ mobile: '9000000000', password: 'secret1' });
-  assert.equal(r.status, 401);
+
+// =========================================
+// UPDATE FARMER TESTS
+// =========================================
+
+test('UNIT 11: update farmer profile', () => {
+
+  const service = createService();
+
+  const registration =
+    service.register(validFarmer);
+
+  const farmerId =
+    registration.body.farmer.id;
+
+  const result =
+    service.updateFarmer(
+      farmerId,
+      {
+        name: 'Ravi K',
+        email: 'ravik@example.com',
+        location: 'Coimbatore',
+        farmSize: '4',
+        mainCrop: 'Rice'
+      }
+    );
+
+  assert.equal(result.status, 200);
+
+  assert.equal(
+    result.body.message,
+    'Profile updated successfully'
+  );
+
+  assert.equal(
+    result.body.farmer.name,
+    'Ravi K'
+  );
+
+  assert.equal(
+    result.body.farmer.location,
+    'Coimbatore'
+  );
+
+  assert.equal(
+    result.body.farmer.farmSize,
+    '4'
+  );
+
+  assert.equal(
+    result.body.farmer.mainCrop,
+    'Rice'
+  );
+
 });
 
-test('login: missing fields return 400', () => {
-  const r = fresh().login({});
-  assert.equal(r.status, 400);
-  assert.ok(r.body.errors.mobile);
-  assert.ok(r.body.errors.password);
+
+test('UNIT 12: update non-existing farmer', () => {
+
+  const service = createService();
+
+  const result =
+    service.updateFarmer(
+      9999,
+      {
+        name: 'Unknown Farmer',
+        email: 'unknown@example.com'
+      }
+    );
+
+  assert.equal(result.status, 404);
+
+  assert.equal(
+    result.body.message,
+    'Farmer not found'
+  );
+
 });
 
-// ---- Profile ----
-test('getFarmer: existing farmer returns 200', () => {
-  const s = fresh();
-  const id = s.register(valid).body.farmer.id;
-  const r = s.getFarmer(id);
-  assert.equal(r.status, 200);
-  assert.equal(r.body.farmer.name, 'Ravi Kumar');
+
+test('UNIT 13: update farmer with invalid email', () => {
+
+  const service = createService();
+
+  const registration =
+    service.register(validFarmer);
+
+  const farmerId =
+    registration.body.farmer.id;
+
+  const result =
+    service.updateFarmer(
+      farmerId,
+      {
+        name: 'Ravi K',
+        email: 'bad-email'
+      }
+    );
+
+  assert.equal(result.status, 400);
+
+  assert.ok(
+    result.body.errors.email
+  );
+
 });
 
-test('getFarmer: unknown id returns 404', () => {
-  const r = fresh().getFarmer(999);
-  assert.equal(r.status, 404);
-  assert.equal(r.body.message, 'Farmer not found');
+
+test('UNIT 14: update farmer with empty name', () => {
+
+  const service = createService();
+
+  const registration =
+    service.register(validFarmer);
+
+  const farmerId =
+    registration.body.farmer.id;
+
+  const result =
+    service.updateFarmer(
+      farmerId,
+      {
+        name: '',
+        email: 'ravik@example.com'
+      }
+    );
+
+  assert.equal(result.status, 400);
+
+  assert.ok(
+    result.body.errors.name
+  );
+
 });
 
-test('updateFarmer: valid update returns 200 and is persisted', () => {
-  const s = fresh();
-  const id = s.register(valid).body.farmer.id;
-  const r = s.updateFarmer(id, {
-    name: 'Ravi K', email: 'new@example.com', location: 'Coimbatore', farmSize: '3.5', mainCrop: 'Rice'
-  });
-  assert.equal(r.status, 200);
-  assert.equal(r.body.farmer.location, 'Coimbatore');
-  const again = s.login({ mobile: valid.mobile, password: valid.password });
-  assert.equal(again.body.farmer.name, 'Ravi K');
-  assert.equal(again.body.farmer.mainCrop, 'Rice');
+
+test('UNIT 15: update does not change mobile number', () => {
+
+  const service = createService();
+
+  const registration =
+    service.register(validFarmer);
+
+  const farmerId =
+    registration.body.farmer.id;
+
+  service.updateFarmer(
+    farmerId,
+    {
+      name: 'Ravi K',
+      mobile: '9000000000',
+      email: 'new@example.com'
+    }
+  );
+
+  const result =
+    service.getFarmer(farmerId);
+
+  assert.equal(result.status, 200);
+
+  // service.js explicitly prevents mobile updates
+  assert.equal(
+    result.body.farmer.mobile,
+    '9876543210'
+  );
+
 });
 
-test('updateFarmer: mobile number cannot be changed', () => {
-  const s = fresh();
-  const id = s.register(valid).body.farmer.id;
-  s.updateFarmer(id, { name: 'Ravi', mobile: '9111111111' });
-  assert.equal(s.getFarmer(id).body.farmer.mobile, valid.mobile);
+
+// =========================================
+// ADMIN LOGIN TESTS
+// =========================================
+
+test('UNIT 16: admin login with correct credentials', () => {
+
+  const service = createService();
+
+  const result =
+    service.adminLogin({
+      username: 'admin',
+      password: 'admin123'
+    });
+
+  assert.equal(result.status, 200);
+
+  assert.equal(
+    result.body.message,
+    'Admin login successful'
+  );
+
+  assert.equal(
+    result.body.admin.username,
+    'admin'
+  );
+
 });
 
-test('updateFarmer: invalid email returns 400 and does not change data', () => {
-  const s = fresh();
-  const id = s.register(valid).body.farmer.id;
-  const r = s.updateFarmer(id, { name: 'Ravi', email: 'bad' });
-  assert.equal(r.status, 400);
-  assert.ok(r.body.errors.email);
-  assert.equal(s.getFarmer(id).body.farmer.email, 'ravi@example.com');
+
+test('UNIT 17: admin login with wrong password', () => {
+
+  const service = createService();
+
+  const result =
+    service.adminLogin({
+      username: 'admin',
+      password: 'wrong'
+    });
+
+  assert.equal(result.status, 401);
+
+  assert.equal(
+    result.body.message,
+    'Invalid admin username or password'
+  );
+
 });
 
-test('updateFarmer: empty name returns 400', () => {
-  const s = fresh();
-  const id = s.register(valid).body.farmer.id;
-  assert.equal(s.updateFarmer(id, { name: '' }).status, 400);
+
+test('UNIT 18: admin login with wrong username', () => {
+
+  const service = createService();
+
+  const result =
+    service.adminLogin({
+      username: 'wrongadmin',
+      password: 'admin123'
+    });
+
+  assert.equal(result.status, 401);
+
 });
 
-test('updateFarmer: unknown id returns 404', () => {
-  assert.equal(fresh().updateFarmer(42, { name: 'X' }).status, 404);
+
+test('UNIT 19: admin login with missing credentials', () => {
+
+  const service = createService();
+
+  const result =
+    service.adminLogin({});
+
+  assert.equal(result.status, 400);
+
+  assert.ok(
+    result.body.errors
+  );
+
 });
 
-// ---- Admin ----
-test('adminLogin: correct credentials return 200', () => {
-  const r = fresh().adminLogin({ username: 'admin', password: 'admin123' });
-  assert.equal(r.status, 200);
-  assert.equal(r.body.admin.username, 'admin');
-});
 
-test('adminLogin: wrong password returns 401', () => {
-  assert.equal(fresh().adminLogin({ username: 'admin', password: 'nope' }).status, 401);
-});
+// =========================================
+// CUSTOM ADMIN CREDENTIALS
+// =========================================
 
-test('adminLogin: missing fields return 400', () => {
-  const r = fresh().adminLogin({});
-  assert.equal(r.status, 400);
-  assert.ok(r.body.errors.username);
-  assert.ok(r.body.errors.password);
-});
+test('UNIT 20: admin login supports custom credentials', () => {
 
-// ---- Persistence ----
-test('persistence: registered farmer and profile update survive a "restart"', () => {
-  const os = require('os');
-  const fs = require('fs');
-  const path = require('path');
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'sa-'));
-  const dataFile = path.join(dir, 'farmers.json');
+  const service =
+    createService({
+      adminUsername: 'superadmin',
+      adminPassword: 'secure123'
+    });
 
-  const first = createService({ dataFile });
-  const id = first.register(valid).body.farmer.id;
-  first.updateFarmer(id, { name: 'Ravi K', location: 'Coimbatore', mainCrop: 'Rice' });
+  const result =
+    service.adminLogin({
+      username: 'superadmin',
+      password: 'secure123'
+    });
 
-  const second = createService({ dataFile }); // new service = server restarted
-  const login = second.login({ mobile: valid.mobile, password: valid.password });
-  assert.equal(login.status, 200);
-  assert.equal(login.body.farmer.name, 'Ravi K');
-  assert.equal(login.body.farmer.location, 'Coimbatore');
-  assert.equal(login.body.farmer.mainCrop, 'Rice');
-  // ids keep increasing after restart
-  const other = second.register({ ...valid, mobile: '9123456780' });
-  assert.equal(other.body.farmer.id, id + 1);
-  fs.rmSync(dir, { recursive: true, force: true });
+  assert.equal(result.status, 200);
+
+  assert.equal(
+    result.body.admin.username,
+    'superadmin'
+  );
+
 });

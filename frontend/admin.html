@@ -1,45 +1,193 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smart Agriculture - Admin</title>
-  <link rel="icon" href="data:,">
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Smart Agriculture - Admin</title>
+
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
-  <div class="card">
-    <h1>Admin</h1>
-    <p class="subtitle">Smart Agriculture - Administrator Access</p>
 
-    <div id="form-message" class="message"></div>
+    <div class="card">
 
-    <form id="admin-form" novalidate>
-      <div class="field">
-        <label for="username">Username</label>
-        <input type="text" id="username" autocomplete="username">
-        <span class="error" id="err-username"></span>
-      </div>
-      <div class="field">
-        <label for="password">Password</label>
-        <div class="password-wrap">
-          <input type="password" id="password" autocomplete="current-password">
-          <button type="button" class="toggle-pw" data-target="password" aria-label="Show password">Show</button>
+        <!-- ========================= -->
+        <!-- ADMIN LOGIN -->
+        <!-- ========================= -->
+
+        <h1>Admin</h1>
+
+        <p class="subtitle">
+            Smart Agriculture - Administrator Access
+        </p>
+
+        <!-- Login / success message -->
+        <div id="form-message" class="message"></div>
+
+
+        <!-- ========================= -->
+        <!-- ADMIN LOGIN FORM -->
+        <!-- ========================= -->
+
+        <form id="admin-form" novalidate>
+
+            <!-- Username -->
+            <div class="field">
+
+                <label for="username">
+                    Username
+                </label>
+
+                <input
+                    type="text"
+                    id="username"
+                    autocomplete="username"
+                    placeholder="Enter admin username"
+                >
+
+                <span
+                    class="error"
+                    id="err-username">
+                </span>
+
+            </div>
+
+
+            <!-- Password -->
+            <div class="field">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <div class="password-wrap">
+
+                    <input
+                        type="password"
+                        id="password"
+                        autocomplete="current-password"
+                        placeholder="Enter admin password"
+                    >
+
+                    <button
+                        type="button"
+                        class="toggle-pw"
+                        data-target="password"
+                        aria-label="Show password">
+                        Show
+                    </button>
+
+                </div>
+
+                <span
+                    class="error"
+                    id="err-password">
+                </span>
+
+            </div>
+
+
+            <!-- Login button -->
+            <button
+                type="submit"
+                class="primary"
+                id="submit-btn">
+
+                Admin Login
+
+            </button>
+
+        </form>
+
+
+        <!-- ========================= -->
+        <!-- ADMIN PANEL -->
+        <!-- ========================= -->
+
+        <div
+            id="admin-panel"
+            style="display: none;">
+
+            <h2>
+                Admin Dashboard
+            </h2>
+
+            <p>
+                Welcome,
+                <strong id="admin-name"></strong>.
+            </p>
+
+            <p class="subtitle">
+                You are logged in as administrator.
+            </p>
+
+
+            <!-- ========================= -->
+            <!-- FARMER MANAGEMENT -->
+            <!-- ========================= -->
+
+            <div class="admin-option">
+
+                <h3>
+                    Farmer Management
+                </h3>
+
+                <p>
+                    View, search, edit and manage
+                    registered farmers.
+                </p>
+
+                <button
+                    type="button"
+                    class="primary"
+                    id="farmer-management-btn">
+
+                    Farmer Management
+
+                </button>
+
+            </div>
+
+
+            <!-- Logout -->
+            <button
+                type="button"
+                class="secondary"
+                id="admin-logout-btn">
+
+                Logout
+
+            </button>
+
         </div>
-        <span class="error" id="err-password"></span>
-      </div>
-      <button type="submit" class="primary" id="submit-btn">Admin Login</button>
-    </form>
 
-    <div id="admin-panel" style="display:none">
-      <p>Welcome, <strong id="admin-name"></strong>. You are logged in as administrator.</p>
-      <p class="subtitle">Admin features (farmer management) will be added in a later sprint.</p>
-      <button type="button" class="secondary" id="admin-logout-btn">Logout</button>
+
+        <!-- ========================= -->
+        <!-- BACK TO FARMER LOGIN -->
+        <!-- ========================= -->
+
+        <div class="links">
+
+            <a href="index.html">
+                Back to Farmer Login
+            </a>
+
+        </div>
+
     </div>
 
-    <div class="links"><a href="index.html">Back to Farmer Login</a></div>
-  </div>
-  <script src="js/common.js"></script>
-  <script src="js/admin.js"></script>
+
+    <!-- ========================= -->
+    <!-- JAVASCRIPT -->
+    <!-- ========================= -->
+
+    <script src="js/common.js"></script>
+    <script src="js/admin.js"></script>
+
 </body>
+
 </html>
