@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Farmer Dashboard | Smart Agriculture</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="dashboard-page">
+
+    <!-- ================================
+         HEADER
+    ================================= -->
+
+    <header class="dashboard-header">
+
+        <div class="brand">
+            <span class="brand-icon">🌱</span>
+            <span>Smart Agriculture</span>
+        </div>
+
+        <div class="header-right">
+
+            <span class="header-welcome">
+                Welcome,
+                <strong id="headerFarmerName">Farmer</strong>
+            </span>
+
+            <button id="logoutButton" class="logout-btn">
+                Logout
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================================
+         MAIN DASHBOARD
+    ================================= -->
+
+    <main class="dashboard-container">
+
+
+        <!-- WELCOME SECTION -->
+
+        <section class="dashboard-intro">
+
+            <div>
+
+                <h1>
+                    Welcome back,
+                    <span id="farmerName">Farmer</span>! 👋
+                </h1>
+
+                <p>
+                    Manage your farm and make smarter agricultural decisions.
+                </p>
+
+            </div>
+
+            <div class="intro-icon">
+                🌾
+            </div>
+
+        </section>
+
+
+        <!-- ================================
+             DASHBOARD CARDS
+        ================================= -->
+
+        <section class="dashboard-grid">
+
+
+            <!-- ================================
+                 MY PROFILE
+            ================================= -->
+
+            <div class="dashboard-card profile-card">
+
+                <div class="card-icon">
+                    👤
+                </div>
+
+                <div class="card-content">
+
+                    <h2>
+                        My Profile
+                    </h2>
+
+                    <p>
+                        View and manage your personal and farm information.
+                    </p>
+
+                    <a
+                        href="profile.html"
+                        class="card-button">
+
+                        View Profile
+                        <span>→</span>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================================
+                 WEATHER
+            ================================= -->
+
+            <div class="dashboard-card weather-card">
+
+                <div class="card-icon">
+                    🌤️
+                </div>
+
+                <div class="card-content">
+
+                    <h2>
+                        Weather
+                    </h2>
+
+                    <p>
+                        Check current weather conditions for your farm.
+                    </p>
+
+                    <a
+                         href="weather.html"
+                         class="dashboard-card-link">
+
+                           View Weather
+
+                        <span>→</span>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================================
+                 SOIL
+            ================================= -->
+
+            <div class="dashboard-card soil-card">
+
+                <div class="card-icon">
+                    🌱
+                </div>
+
+                <div class="card-content">
+
+                    <h2>
+                        Soil
+                    </h2>
+
+                    <p>
+                        Upload and view your soil test report.
+                    </p>
+
+                    <a
+                        href="soil.html"
+                        class="card-button">
+
+                        View Soil
+                        <span>→</span>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================================
+                 FARM & CROPS
+            ================================= -->
+
+            <div class="dashboard-card farm-card">
+
+                <div class="card-icon">
+                    🌾
+                </div>
+
+                <div class="card-content">
+
+                    <h2>
+                        Farm &amp; Crops
+                    </h2>
+
+                    <p>
+                        Add and manage your farm and crop information.
+                    </p>
+
+                    <a
+                        href="farm.html"
+                        class="card-button">
+
+                        Manage Farm
+                        <span>→</span>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================================
+                 YIELD PREDICTION
+            ================================= -->
+
+            <div class="dashboard-card yield-card">
+
+                <div class="card-icon">
+                    📈
+                </div>
+
+                <div class="card-content">
+
+                    <h2>
+                        Yield Prediction
+                    </h2>
+
+                    <p>
+                        Estimate the expected yield of your crops.
+                    </p>
+
+                    <a
+                        href="prediction.html"
+                        class="card-button">
+
+                        Predict Yield
+                        <span>→</span>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================================
+                 CROP RECOMMENDATION
+            ================================= -->
+
+            <div class="dashboard-card recommendation-card">
+
+                <div class="card-icon">
+                    🌾
+                </div>
+
+                <div class="card-content">
+
+                    <h2>
+                        Crop Recommendation
+                    </h2>
+
+                    <p>
+                        Get crop suggestions based on your farm conditions.
+                    </p>
+
+                    <a
+                        href="recommendation.html"
+                        class="card-button">
+
+                        View Suggestions
+                        <span>→</span>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+    </main>
+
+
+    <!-- DASHBOARD JAVASCRIPT -->
+
+    <script src="js/dashboard.js"></script>
+
+</body>
+
+</html>

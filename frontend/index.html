@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Agriculture - Farmer Login</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="card">
+    <h1>Smart Agriculture</h1>
+    <p class="subtitle">Farmer Login</p>
+
+    <div id="form-message" class="message"></div>
+
+    <form id="login-form" novalidate>
+      <div class="field">
+        <label for="mobile">Mobile Number</label>
+        <input type="text" id="mobile" inputmode="numeric" maxlength="10" autocomplete="username">
+        <span class="error" id="err-mobile"></span>
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <div class="password-wrap">
+          <input type="password" id="password" autocomplete="current-password">
+          <button type="button" class="toggle-pw" data-target="password" aria-label="Show password">Show</button>
+        </div>
+        <span class="error" id="err-password"></span>
+      </div>
+      <button type="submit" class="primary" id="submit-btn">Login</button>
+    </form>
+
+    <div class="links">
+      <a href="register.html">New farmer? Register</a>
+      <span>|</span>
+      <a href="admin.html">Admin Login</a>
+    </div>
+  </div>
+  <script src="js/common.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>My Profile | Smart Agriculture</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css">
+
+</head>
+
+
+<body class="profile-page">
+
+
+    <!-- =========================================
+         HEADER
+    ========================================== -->
+
+    <header class="dashboard-header">
+
+        <div class="brand">
+
+            <span class="brand-icon">
+                🌱
+            </span>
+
+            <span>
+                Smart Agriculture
+            </span>
+
+        </div>
+
+
+        <button
+            class="back-btn"
+            onclick="goToDashboard()">
+
+            ← Dashboard
+
+        </button>
+
+    </header>
+
+
+
+    <!-- =========================================
+         MAIN
+    ========================================== -->
+
+    <main class="profile-container">
+
+
+        <!-- =====================================
+             PAGE TITLE
+        ====================================== -->
+
+        <section class="profile-intro">
+
+            <div>
+
+                <h1>
+                    My Profile
+                </h1>
+
+                <p>
+                    View and manage your personal information.
+                </p>
+
+            </div>
+
+
+            <div class="profile-big-icon">
+                👤
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================
+             PERSONAL INFORMATION
+        ====================================== -->
+
+        <section class="profile-card">
+
+
+            <div class="profile-card-header">
+
+                <div>
+
+                    <h2>
+                        👤 Personal Information
+                    </h2>
+
+                    <p>
+                        Your registered account details
+                    </p>
+
+                </div>
+
+
+                <button
+                    id="editButton"
+                    class="edit-btn"
+                    type="button"
+                    onclick="enableEditing()">
+
+                    Edit Profile
+
+                </button>
+
+            </div>
+
+
+
+            <!-- MESSAGE -->
+
+            <div
+                id="profileMessage"
+                class="profile-message">
+            </div>
+
+
+
+            <!-- FORM -->
+
+            <form id="profileForm">
+
+
+                <!-- NAME -->
+
+                <div class="profile-field">
+
+                    <label for="profileName">
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="profileName"
+                        readonly>
+
+                </div>
+
+
+
+                <!-- MOBILE -->
+
+                <div class="profile-field">
+
+                    <label for="profileMobile">
+                        Mobile Number
+                    </label>
+
+                    <input
+                        type="text"
+                        id="profileMobile"
+                        readonly>
+
+                </div>
+
+
+
+                <!-- EMAIL -->
+
+                <div class="profile-field">
+
+                    <label for="profileEmail">
+                        Email Address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="profileEmail"
+                        readonly>
+
+                </div>
+
+
+
+                <!-- ACTION BUTTONS -->
+
+                <div
+                    id="profileActions"
+                    class="profile-actions"
+                    style="display: none;">
+
+                    <button
+                        type="button"
+                        class="cancel-btn"
+                        onclick="cancelEditing()">
+
+                        Cancel
+
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        class="save-btn">
+
+                        Save Changes
+
+                    </button>
+
+                </div>
+
+
+            </form>
+
+        </section>
+
+
+
+        <!-- =====================================
+             FARM INFORMATION
+        ====================================== -->
+
+        <section class="profile-card farm-info-card">
+
+
+            <div class="profile-card-header">
+
+                <div>
+
+                    <h2>
+                        🌾 Farm Information
+                    </h2>
+
+                    <p>
+                        Your registered farm and crop details
+                    </p>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="edit-btn"
+                    onclick="goToFarm()">
+
+                    Manage Farm
+
+                </button>
+
+            </div>
+
+
+
+            <!-- =================================
+                 DYNAMIC FARM CONTENT
+
+                 profile.js will fill this area
+            ================================== -->
+
+            <div id="farmProfileContent">
+
+                <!-- JavaScript loads farm details here -->
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =========================================
+         JAVASCRIPT
+    ========================================== -->
+
+    <script src="js/profile.js"></script>
+
+
+</body>
+
+</html>

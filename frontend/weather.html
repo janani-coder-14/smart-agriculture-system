@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Weather Monitoring</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css">
+</head>
+
+<body>
+
+<div class="weather-page">
+
+    <!-- HEADER -->
+
+    <header class="weather-header">
+
+        <div>
+            <p class="weather-label">FARM WEATHER</p>
+
+            <h1>Weather Monitoring</h1>
+
+            <p class="weather-subtitle">
+                Current weather conditions at your farm location.
+            </p>
+        </div>
+
+        <button
+            class="back-btn"
+            onclick="goToDashboard()">
+
+            ← Dashboard
+
+        </button>
+
+    </header>
+
+
+    <!-- LOCATION -->
+
+    <section class="weather-location-card">
+
+        <div class="location-icon">
+            📍
+        </div>
+
+        <div>
+
+            <span class="small-label">
+                FARM LOCATION
+            </span>
+
+            <h2 id="locationName">
+                Detecting location...
+            </h2>
+
+            <p id="coordinates">
+                --
+            </p>
+
+        </div>
+
+        <button
+            id="refreshWeather"
+            class="refresh-btn">
+
+            ↻ Refresh
+
+        </button>
+
+    </section>
+
+
+    <!-- LOADING -->
+
+    <div
+        id="weatherLoading"
+        class="weather-loading">
+
+        <div class="loader"></div>
+
+        <p>
+            Getting weather information...
+        </p>
+
+    </div>
+
+
+    <!-- ERROR -->
+
+    <div
+        id="weatherError"
+        class="weather-error"
+        style="display:none;">
+
+        <strong>Unable to load weather</strong>
+
+        <p id="errorMessage"></p>
+
+        <button
+            onclick="getCurrentLocationAndWeather()">
+
+            Try Again
+
+        </button>
+
+    </div>
+
+
+    <!-- WEATHER CONTENT -->
+
+    <main
+        id="weatherContent"
+        style="display:none;">
+
+
+        <!-- MAIN WEATHER -->
+
+        <section class="current-weather-card">
+
+            <div class="weather-main">
+
+                <div
+                    id="weatherIcon"
+                    class="weather-icon">
+
+                    ☀️
+
+                </div>
+
+                <div>
+
+                    <p class="weather-condition">
+                        CURRENT CONDITION
+                    </p>
+
+                    <h2 id="weatherDescription">
+                        Clear
+                    </h2>
+
+                    <div class="temperature">
+
+                        <span id="temperature">
+                            --
+                        </span>
+
+                        <span>°C</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="weather-time">
+
+                Updated
+
+                <strong id="weatherTime">
+                    --
+                </strong>
+
+            </div>
+
+        </section>
+
+
+        <!-- WEATHER DETAILS -->
+
+        <section class="weather-grid">
+
+
+            <!-- HUMIDITY -->
+
+            <div class="weather-detail-card">
+
+                <div class="detail-icon">
+                    💧
+                </div>
+
+                <div>
+
+                    <span>
+                        HUMIDITY
+                    </span>
+
+                    <strong id="humidity">
+                        --
+                    </strong>
+
+                    <small>
+                        %
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- RAIN -->
+
+            <div class="weather-detail-card">
+
+                <div class="detail-icon">
+                    🌧️
+                </div>
+
+                <div>
+
+                    <span>
+                        PRECIPITATION
+                    </span>
+
+                    <strong id="precipitation">
+                        --
+                    </strong>
+
+                    <small>
+                        mm
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- WIND -->
+
+            <div class="weather-detail-card">
+
+                <div class="detail-icon">
+                    💨
+                </div>
+
+                <div>
+
+                    <span>
+                        WIND SPEED
+                    </span>
+
+                    <strong id="windSpeed">
+                        --
+                    </strong>
+
+                    <small>
+                        km/h
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- APPARENT TEMPERATURE -->
+
+            <div class="weather-detail-card">
+
+                <div class="detail-icon">
+                    🌡️
+                </div>
+
+                <div>
+
+                    <span>
+                        FEELS LIKE
+                    </span>
+
+                    <strong id="feelsLike">
+                        --
+                    </strong>
+
+                    <small>
+                        °C
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- CLOUD -->
+
+            <div class="weather-detail-card">
+
+                <div class="detail-icon">
+                    ☁️
+                </div>
+
+                <div>
+
+                    <span>
+                        CLOUD COVER
+                    </span>
+
+                    <strong id="cloudCover">
+                        --
+                    </strong>
+
+                    <small>
+                        %
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- WEATHER CODE -->
+
+            <div class="weather-detail-card">
+
+                <div class="detail-icon">
+                    🌤️
+                </div>
+
+                <div>
+
+                    <span>
+                        WEATHER STATUS
+                    </span>
+
+                    <strong id="weatherCodeText">
+                        --
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FARMING INSIGHT -->
+
+        <section class="weather-advice">
+
+            <div class="advice-icon">
+                🌱
+            </div>
+
+            <div>
+
+                <h3>
+                    Farm Weather Insight
+                </h3>
+
+                <p id="farmAdvice">
+                    Weather information will be analyzed
+                    for your farm.
+                </p>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+</div>
+
+
+<script src="js/weather.js"></script>
+
+</body>
+
+</html>
