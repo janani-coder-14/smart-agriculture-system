@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "node --test ../tests/unit/validators.test.js ../tests/unit/service.test.js ../tests/api/api.test.js",
+    "test": "node --test ../tests/unit/validators.test.js ../tests/unit/service.test.js ../tests/api/api.test.js ../tests/unit/soil-service.test.js ../tests/api/soil-api.test.js",
     "test:unit": "node --test ../tests/unit/validators.test.js ../tests/unit/service.test.js",
     "test:api": "node --test ../tests/api/api.test.js"
   },
