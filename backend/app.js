@@ -1,4 +1,3 @@
-
 const path = require('path');
 const fs = require('fs');
 const crypto = require('crypto');
@@ -7,10 +6,12 @@ const multer = require('multer');
 
 const { createService } = require('./service');
 const { createSoilService } = require('./soil-service');
+const { createWeatherService } = require('./weather-service');
 
 function createApp(
     service = createService(),
-    soilService = createSoilService()
+    soilService = createSoilService(),
+    weatherService = createWeatherService()
 ) {
     const app = express();
 
@@ -23,7 +24,6 @@ function createApp(
             const { createSoilAIService } = require('./soil-ai-service');
             soilAIService = createSoilAIService();
         }
-
         return soilAIService;
     }
 
@@ -35,7 +35,6 @@ function createApp(
 
             soilImageExtractor = createSoilImageExtractor();
         }
-
         return soilImageExtractor;
     }
 
@@ -49,7 +48,6 @@ function createApp(
         destination: (req, file, callback) => {
             callback(null, soilService.uploadDir);
         },
-
         filename: (req, file, callback) => {
             const extension = path.extname(file.originalname).toLowerCase();
             callback(null, `${crypto.randomUUID()}${extension}`);
@@ -161,7 +159,6 @@ function createApp(
                 extracted.unreadableItems.length > 0;
 
             // Save extraction before interpretation.
-            // This preserves the extraction if the next stage fails.
             soilService.updateAnalysis(farmerId, report.id, {
                 status: 'Needs review',
                 extraction: extracted,
@@ -169,13 +166,13 @@ function createApp(
                 error: null
             });
 
-            // Stage 2: Interpret the extracted measurements.
+            // Stage 2: Interpret extracted measurements.
             const aiService = getSoilAIService();
 
             const interpretation =
                 await aiService.interpretSoilAnalysis(extracted);
 
-            // Stage 3: Save both extraction and interpretation.
+            // Stage 3: Save extraction and interpretation.
             const finalStatus = needsReview
                 ? 'Needs review'
                 : 'Analyzed';
@@ -285,7 +282,7 @@ function createApp(
                 });
             }
 
-            // The uploaded report remains saved if analysis fails.
+            // The report remains saved if analysis fails.
             const result = await analyzeAndSaveReport(farmerId, report);
             const savedReport = soilService.find(farmerId, report.id);
 
@@ -341,6 +338,7 @@ function createApp(
             }
 
             const result = await analyzeAndSaveReport(farmerId, report);
+
             const updatedReport = soilService.find(
                 farmerId,
                 report.id
@@ -439,6 +437,52 @@ function createApp(
             }
         }
     );
+
+    // --------------------------------------------------
+    // WEATHER MONITORING AND FORECAST
+    // --------------------------------------------------
+
+    // Current weather conditions: Weather Monitoring
+    app.get('/api/weather/current', async (req, res) => {
+        try {
+            const weather = await weatherService.fetchWeather(
+                req.query.latitude,
+                req.query.longitude
+            );
+
+            return res.json({
+                message: 'Current weather retrieved successfully',
+                location: weather.location,
+                current: weather.current
+            });
+        } catch (error) {
+            return res.status(error.statusCode || 500).json({
+                message:
+                    error.message || 'Could not retrieve current weather'
+            });
+        }
+    });
+
+    // Seven-day forecast: Weather Forecasting
+    app.get('/api/weather/forecast', async (req, res) => {
+        try {
+            const weather = await weatherService.fetchWeather(
+                req.query.latitude,
+                req.query.longitude
+            );
+
+            return res.json({
+                message: 'Weather forecast retrieved successfully',
+                location: weather.location,
+                forecast: weather.forecast
+            });
+        } catch (error) {
+            return res.status(error.statusCode || 500).json({
+                message:
+                    error.message || 'Could not retrieve weather forecast'
+            });
+        }
+    });
 
     // --------------------------------------------------
     // UNKNOWN API ROUTES

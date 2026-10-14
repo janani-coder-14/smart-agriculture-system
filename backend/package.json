@@ -4,11 +4,11 @@
   "description": "Smart Agriculture - Sprint 1 (farmer registration/login, profile, admin login)",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "test": "node --test ../tests/unit/validators.test.js ../tests/unit/service.test.js ../tests/api/api.test.js ../tests/unit/soil-service.test.js ../tests/api/soil-api.test.js",
-    "test:unit": "node --test ../tests/unit/validators.test.js ../tests/unit/service.test.js",
-    "test:api": "node --test ../tests/api/api.test.js"
-  },
+  "start": "node server.js",
+  "test": "node --test ../tests/unit/validators.test.js ../tests/unit/service.test.js ../tests/api/api.test.js ../tests/unit/soil-service.test.js ../tests/api/soil-api.test.js ../tests/unit/weather-service.test.js ../tests/api/weather-api.test.js",
+  "test:unit": "node --test ../tests/unit/validators.test.js ../tests/unit/service.test.js",
+  "test:api": "node --test ../tests/api/api.test.js"
+},
   "engines": {
     "node": ">=18"
   },

@@ -13,6 +13,129 @@
     <link
         rel="stylesheet"
         href="css/style.css">
+
+    <!-- Styles for the new forecast section only -->
+    <style>
+        .weather-forecast-section {
+            margin-top: 24px;
+            padding: 24px;
+            background: #ffffff;
+            border: 1px solid #e0eae5;
+            border-radius: 16px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+        }
+
+        .forecast-section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .forecast-section-header h2 {
+            margin: 0 0 6px;
+            color: #16433e;
+            font-size: 22px;
+        }
+
+        .forecast-section-header p {
+            margin: 0;
+            color: #64748b;
+        }
+
+        .forecast-toggle {
+            border: none;
+            background: transparent;
+            color: #176b5b;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .forecast-toggle:hover {
+            text-decoration: underline;
+        }
+
+        .weather-forecast-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .forecast-day-card {
+            min-width: 0;
+            padding: 18px;
+            border: 1px solid #dce8e3;
+            border-radius: 12px;
+            background: #ffffff;
+        }
+
+        .forecast-day-card h3 {
+            margin: 0 0 12px;
+            color: #16433e;
+            font-size: 16px;
+        }
+
+        .forecast-day-icon {
+            font-size: 30px;
+            margin-bottom: 6px;
+        }
+
+        .forecast-day-condition {
+            color: #64748b;
+            margin: 0 0 12px;
+        }
+
+        .forecast-day-temperatures {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .forecast-day-temperatures strong {
+            display: block;
+            margin-top: 4px;
+            color: #173f3a;
+            font-size: 18px;
+        }
+
+        .forecast-day-temperatures span {
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        .forecast-day-detail {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 8px 0;
+            border-top: 1px solid #edf1ef;
+            font-size: 13px;
+        }
+
+        .forecast-day-detail span {
+            color: #64748b;
+        }
+
+        .forecast-error-message {
+            color: #b42318;
+            margin-top: 12px;
+        }
+
+        @media (max-width: 600px) {
+            .weather-forecast-section {
+                padding: 16px;
+            }
+
+            .weather-forecast-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -35,7 +158,8 @@
 
         <button
             class="back-btn"
-            onclick="goToDashboard()">
+            onclick="goToDashboard()"
+            type="button">
 
             ← Dashboard
 
@@ -70,7 +194,8 @@
 
         <button
             id="refreshWeather"
-            class="refresh-btn">
+            class="refresh-btn"
+            type="button">
 
             ↻ Refresh
 
@@ -106,7 +231,8 @@
         <p id="errorMessage"></p>
 
         <button
-            onclick="getCurrentLocationAndWeather()">
+            onclick="getCurrentLocationAndWeather()"
+            type="button">
 
             Try Again
 
@@ -176,7 +302,6 @@
         <!-- WEATHER DETAILS -->
 
         <section class="weather-grid">
-
 
             <!-- HUMIDITY -->
 
@@ -358,6 +483,53 @@
                 </p>
 
             </div>
+
+        </section>
+
+
+        <!-- 7-DAY WEATHER FORECAST -->
+
+        <section class="weather-forecast-section">
+
+            <div class="forecast-section-header">
+
+                <div>
+                    <h2>📅 7-Day Weather Forecast</h2>
+
+                    <p>
+                        Upcoming weather conditions for your farm.
+                    </p>
+                </div>
+
+                <button
+                    type="button"
+                    id="toggleForecast"
+                    class="forecast-toggle"
+                    aria-expanded="false">
+
+                    View More ↓
+
+                </button>
+
+            </div>
+
+            <div
+                id="weatherForecastGrid"
+                class="weather-forecast-grid"
+                aria-live="polite">
+
+                <p id="forecastLoadingMessage">
+                    Loading forecast...
+                </p>
+
+            </div>
+
+            <p
+                id="forecastErrorMessage"
+                class="forecast-error-message"
+                style="display:none;">
+
+            </p>
 
         </section>
 

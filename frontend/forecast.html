@@ -1,0 +1,178 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7-Day Weather Forecast</title>
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .forecast-page {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        .forecast-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+
+        .forecast-header h1 {
+            margin-bottom: 8px;
+        }
+
+        .forecast-subtitle {
+            color: #64748b;
+        }
+
+        .forecast-back,
+        .forecast-refresh {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .forecast-location {
+            padding: 20px;
+            margin-bottom: 24px;
+            border-radius: 14px;
+            background: #ffffff;
+            border: 1px solid #dce8e3;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+        }
+
+        .forecast-location h2 {
+            margin: 8px 0;
+        }
+
+        .forecast-status {
+            padding: 18px;
+            text-align: center;
+        }
+
+        .forecast-error {
+            color: #b42318;
+            background: #fff1f0;
+            border-radius: 10px;
+        }
+
+        .forecast-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+        }
+
+        .forecast-card {
+            padding: 22px;
+            background: #ffffff;
+            border: 1px solid #dce8e3;
+            border-radius: 14px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+        }
+
+        .forecast-card h3 {
+            margin: 0 0 14px;
+        }
+
+        .forecast-icon {
+            font-size: 34px;
+            margin-bottom: 10px;
+        }
+
+        .forecast-condition {
+            color: #64748b;
+            margin-bottom: 16px;
+        }
+
+        .forecast-temperatures {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .forecast-temperatures strong {
+            display: block;
+            font-size: 22px;
+        }
+
+        .forecast-temperatures span,
+        .forecast-detail span {
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .forecast-detail {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 9px 0;
+            border-top: 1px solid #edf1ef;
+        }
+
+        .forecast-detail strong {
+            text-align: right;
+        }
+
+        @media (max-width: 600px) {
+            .forecast-page {
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="forecast-page">
+        <header class="forecast-header">
+            <div>
+                <p class="weather-label">FARM WEATHER</p>
+                <h1>7-Day Weather Forecast</h1>
+                <p class="forecast-subtitle">
+                    Plan your farming activities using the upcoming weather.
+                </p>
+            </div>
+
+            <button class="forecast-back" type="button"
+                onclick="window.location.href='weather.html'">
+                ← Weather Monitoring
+            </button>
+        </header>
+
+        <section class="forecast-location">
+            <p class="small-label">FARM LOCATION</p>
+            <h2 id="forecastLocation">Loading farm location...</h2>
+            <p id="forecastCoordinates">--</p>
+            <button class="forecast-refresh" id="forecastRefresh" type="button">
+                ↻ Refresh Forecast
+            </button>
+        </section>
+
+        <div id="forecastLoading" class="forecast-status" role="status">
+            Loading the 7-day forecast...
+        </div>
+
+        <section id="forecastError" class="forecast-status forecast-error"
+            role="alert" hidden>
+            <strong>Unable to load forecast</strong>
+            <p id="forecastErrorMessage"></p>
+            <button type="button" id="forecastRetry">Try Again</button>
+        </section>
+
+        <section id="forecastGrid" class="forecast-grid"
+            aria-label="Seven-day weather forecast" hidden>
+        </section>
+    </main>
+
+    <script src="js/forecast.js"></script>
+</body>
+</html>
+```
