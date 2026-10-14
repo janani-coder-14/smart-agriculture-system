@@ -1,0 +1,230 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soil Information | Smart Agriculture</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .soil-container {
+            max-width: 1000px;
+            margin: 35px auto;
+            padding: 24px;
+        }
+
+        .soil-header {
+            margin-bottom: 28px;
+        }
+
+        .soil-header h1 {
+            color: #174c35;
+            margin-bottom: 8px;
+        }
+
+        .soil-panel {
+            background: #fff;
+            padding: 24px;
+            margin-bottom: 24px;
+            border-radius: 14px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
+        }
+
+        .soil-upload-box {
+            border: 2px dashed #8caf98;
+            border-radius: 12px;
+            padding: 30px 20px;
+            text-align: center;
+            background: #f7fbf7;
+        }
+
+        .soil-upload-box .upload-icon {
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+
+        .soil-upload-box input[type="file"] {
+            display: block;
+            width: 100%;
+            max-width: 400px;
+            margin: 20px auto;
+        }
+
+        .soil-btn {
+            display: inline-block;
+            padding: 11px 18px;
+            border: none;
+            border-radius: 7px;
+            background: #276247;
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 4px;
+        }
+
+        .soil-btn:hover {
+            background: #174c35;
+        }
+
+        .soil-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .soil-btn-danger {
+            background: #b42318;
+        }
+
+        .soil-btn-danger:hover {
+            background: #8e1b13;
+        }
+
+        .soil-message {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 7px;
+            display: none;
+            overflow-wrap: anywhere;
+        }
+
+        .soil-message.success {
+            display: block;
+            background: #e9f7ed;
+            color: #176438;
+        }
+
+        .soil-message.error {
+            display: block;
+            background: #fdecec;
+            color: #a11b1b;
+        }
+
+        .soil-report-list {
+            display: grid;
+            gap: 14px;
+        }
+
+        .soil-report {
+            border: 1px solid #e2e8e3;
+            border-radius: 10px;
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .soil-report h3 {
+            margin: 0 0 8px;
+            overflow-wrap: anywhere;
+        }
+
+        .soil-report p {
+            margin: 5px 0;
+            color: #59665d;
+            font-size: 13px;
+        }
+
+        .soil-report-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .soil-empty {
+            text-align: center;
+            color: #68766b;
+            padding: 24px 10px;
+        }
+
+        .soil-back {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #276247;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        @media (max-width: 600px) {
+            .soil-container {
+                margin: 15px auto;
+                padding: 14px;
+            }
+
+            .soil-panel {
+                padding: 17px;
+            }
+
+            .soil-report {
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <main class="soil-container">
+        <a class="soil-back" href="dashboard.html">← Back to Dashboard</a>
+
+        <header class="soil-header">
+            <h1>🌱 Soil Information Management</h1>
+            <p>Upload and manage your farm's soil testing reports.</p>
+        </header>
+
+        <section class="soil-panel">
+            <h2>Upload Soil Report</h2>
+            <p>
+                Select a soil laboratory report in PDF, JPG, JPEG or PNG format.
+                Maximum file size: 10 MB.
+            </p>
+
+            <form id="soilUploadForm" class="soil-upload-box">
+                <div class="upload-icon">📄</div>
+                <h3>Upload Your Soil Report</h3>
+                <p>Choose a soil report from your device.</p>
+
+                <input
+                    type="file"
+                    id="soilReportFile"
+                    name="report"
+                    accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                    required
+                >
+
+                <button type="submit" class="soil-btn" id="uploadButton">
+                    Upload Report
+                </button>
+            </form>
+
+            <div id="soilMessage" class="soil-message" role="status"></div>
+        </section>
+
+        <section class="soil-panel">
+            <h2>Your Soil Reports</h2>
+            <p>View, download or delete your previously uploaded reports.</p>
+
+            <button type="button" class="soil-btn" id="refreshReportsButton">
+                Refresh Reports
+            </button>
+
+            <div id="soilReportsList" class="soil-report-list" aria-live="polite">
+                <p class="soil-empty">Loading soil reports...</p>
+            </div>
+        </section>
+
+        
+<section class="soil-panel" id="soilAnalysisSection">
+    <h2>Soil Analysis</h2>
+    <p id="soilAnalysisMessage">
+        Select an uploaded report to view its soil analysis.
+    </p>
+    <div id="soilAnalysisResults"></div>
+</section>
+
+    </main>
+
+    <script src="js/soil.js"></script>
+</body>
+</html>

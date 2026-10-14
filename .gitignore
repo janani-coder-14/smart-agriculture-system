@@ -1,2 +1,7 @@
 node_modules/
 backend/data/
+
+backend/uploads/soil-reports/
+
+/backend/.env
+/backend/uploads/soil-reports/
